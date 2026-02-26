@@ -22,22 +22,4 @@
 
 <ul id="messageList"></ul>
 
-<script>
-
-	const connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
-
-	connection.start().then(function(){
-		console.log("SignalR bağlantısı kuruldu.");
-
-	});
-
-	connection.on("ReceiveMessage", function(user,message){
-		const li = document.createElement("li");
-		li.textContent = `${user}: ${message}`;
-		document.getElementById("messageList").appendChild(li);
-	});
-
-
-
-
-</script>
+<script src="~/js/chat.js"></script>
