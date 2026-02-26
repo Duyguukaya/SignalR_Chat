@@ -1,10 +1,43 @@
-﻿
-@{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
 
 <h3>SignalR Chat</h3>
 
+<div class="card text-center">
+	<div class="card-body">
+
+		<input type="text" id="userInput" placeholder="Kullanıcı Adı" class="form-control" />
+		<br />
+		<textarea id="messageInput" placeholder="Mesajınızı Yazın" class="form-control"></textarea>
+		<br />
+		<button id="sendButton" class="btn btn-dark">Gönder</button>
+
+	</div>
+</div>
+
+
+<ul id="messageList"></ul>
+
+<script>
+
+	const connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+
+	connection.start().then(function(){
+		console.log("SignalR bağlantısı kuruldu.");
+
+	});
+
+	connection.on("ReceiveMessage", function(user,message){
+		const li = document.createElement("li");
+		li.textContent = `${user}: ${message}`;
+		document.getElementById("messageList").appendChild(li);
+	});
+
+
+
+
+</script>
